@@ -1,0 +1,30 @@
+---
+- name: Centos customize to server future
+  become: yes
+  hosts: centos
+
+  tasks:
+  - name: Update the system
+    yum:
+      name: "*"
+      state: latest #==Update latest version RPM repo===
+
+  - name: Editors file
+    yum: 
+      name: mc 
+      state: latest
+
+  - name: Copy directors
+    copy: 
+      src: /usr/share/mc/syntax/sh.syntax  
+      dest: /usr/share/mc/syntax/unknown.syntax
+
+  - name: Install network utilits
+    yum: 
+      name: "{{packages}}"
+      state: latest 
+    vars:
+      packages:
+      - net-tools 
+      - bind-utils
+     
